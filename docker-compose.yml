@@ -1,0 +1,71 @@
+version: '3.8'
+
+services:
+  # ... (Service app biarkan sama)
+  app:
+    build: ./app
+    container_name: pl_app
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://admin:password123@postgres:5432/pl_ticket_db
+    depends_on:
+      - postgres
+      - redis
+    deploy:
+      resources:
+        limits:
+          memory: 300M
+
+  postgres:
+    image: postgres:13-alpine
+    container_name: pl_postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: pl_ticket_final
+    volumes:
+      # --- UBAH BAGIAN INI ---
+      # Kita paksa simpan di folder baru bernama 'db_data_baru'
+      # Docker akan menganggap ini database kosong & bikin tabel ulang
+      - pl_db_data:/var/lib/postgresql/data
+    deploy:
+      resources:
+        limits:
+          memory: 300M
+
+  # ... (Redis, Prometheus, Grafana biarkan sama)
+  redis:
+    image: redis:alpine
+    container_name: pl_redis
+    deploy:
+      resources:
+        limits:
+          memory: 200M
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: pl_prometheus
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    deploy:
+      resources:
+        limits:
+          memory: 300M
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: pl_grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    deploy:
+      resources:
+        limits:
+          memory: 300M
+
+volumes:
+  pl_db_data:

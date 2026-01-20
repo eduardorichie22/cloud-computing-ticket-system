@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Register - PL Tickets</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { theme: { extend: { colors: { plPurple: '#37003c', plGreen: '#00ff85' } } } }</script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center h-screen bg-plPurple">
+    <div class="bg-white p-8 rounded-xl shadow-2xl w-full max-w-md">
+        <h1 class="text-2xl font-bold text-plPurple mb-2 text-center">Create Account</h1>
+        <p class="text-gray-500 text-sm mb-6 text-center">Join the official ticketing platform</p>
+
+        {% if error %}
+        <div class="bg-red-100 text-red-600 p-3 rounded mb-4 text-sm font-bold text-center">{{ error }}</div>
+        {% endif %}
+
+        <form action="/register" method="post" class="space-y-4">
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-1">Choose Username</label>
+                <input type="text" name="username" class="w-full border rounded p-3 focus:outline-none focus:border-plPurple" required>
+            </div>
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-1">Password</label>
+                <input type="password" name="password" class="w-full border rounded p-3 focus:outline-none focus:border-plPurple" required>
+            </div>
+            <button type="submit" class="w-full bg-plGreen text-plPurple font-bold py-3 rounded hover:bg-green-400 transition">Create Account</button>
+        </form>
+
+        <div class="text-center mt-6 text-sm">
+            <span class="text-gray-500">Already have an account?</span>
+            <a href="/login" class="text-plPurple font-bold hover:underline">Sign In</a>
+        </div>
+    </div>
+</body>
+</html>

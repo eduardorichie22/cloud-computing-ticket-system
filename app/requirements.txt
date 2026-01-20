@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+sqlalchemy
+psycopg2-binary
+redis
+prometheus-fastapi-instrumentator
+jinja2
+python-multipart
+itsdangerous
+passlib
+# Hapus baris bcrypt
