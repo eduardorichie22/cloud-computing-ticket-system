@@ -46,8 +46,19 @@ Ensure you have **Docker Desktop** installed and running on your machine.
 
 ### 2. Clone & Start
 ```bash
-git clone [https://github.com/eduardorichie22/cloud-computing-ticket-system.git](https://github.com/eduardorichie22/cloud-computing-ticket-system.git)
+git clone https://github.com/eduardorichie22/cloud-computing-ticket-system.git
 cd cloud-computing-ticket-system
 
 # Build and Start Containers
 docker-compose up --build
+```
+### 3. Access the Application
+- Web App: http://localhost:8000
+- Grafana Dashboard: http://localhost:3000 (Login: admin / admin)
+- Prometheus: http://localhost:9090
+
+### 🔮 Future Improvements
+Based on the analysis, the following improvements are recommended for a Production environment:
+- Asynchronous Queue (RabbitMQ): To decouple the purchase requests from the database writing process.
+- PgBouncer: To manage database connection pooling more efficiently.
+- Horizontal Pod Autoscaling (HPA): Using Kubernetes to scale the backend pods when CPU usage exceeds 70%.
